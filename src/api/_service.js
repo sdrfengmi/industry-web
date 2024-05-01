@@ -47,6 +47,7 @@ export function createService() {
 
           router.push({ name: 'login' })
           console.log('登陆超时，无权登陆')
+          break;
         }
         // 根据需要添加其它判断
         default: {

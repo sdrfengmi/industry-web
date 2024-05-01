@@ -1,0 +1,132 @@
+/* 滚动条 */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    min-height: 50px;
+    background: rgb(207, 207, 207);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    min-height: 50px;
+    min-width: 100px;
+    background-color: #878987;
+}
+
+:-webkit-scrollbar-track-piece {
+    background-color: rgb(244, 244, 244);
+    margin: 0px;
+}
+
+/* 优化显示 */
+html,
+body {
+    margin: 0px;
+    height: 100%;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+p {
+    margin: 0;
+}
+
+/* 公用全局样式 */
+body {
+    font-size: 16px;
+}
+
+.container-wrapper {
+    background-color: #fff;
+    overflow: auto;
+    max-height: calc(100% - 20px);
+    padding: 10px;
+}
+
+/* 表格头部的搜索，按钮样式 */
+.top_button {
+    background-color: #fff;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+
+}
+
+.top_button .button-wrapper {
+    flex: 1;
+    padding-left: 12px;
+}
+
+.search-form-wrapper {
+    padding: 8px 12px 0;
+    background-color: #fff;
+
+    .form-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+}
+
+.more-search-filed-icon {
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    height: 30px;
+    width: 30px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.more-search-filed-icon img {
+    display: block;
+    width: 20px;
+}
+
+.more-search-filed-icon.active {
+    background-color: #ECF5FF;
+    border-color: #E4E9EE;
+}
+
+.searchForm label.el-form-item__label {
+    text-align: right;
+    line-height: 40px;
+    float: left;
+    display: block;
+}
+
+.searchForm div.el-form-item {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.search-popver.el-popover.el-popper {
+    width: calc(100vw - 253px);
+    border-radius: 0;
+    left: 216px !important;
+    padding-bottom: 4px;
+
+    .popper__arrow {
+        left: auto !important;
+        right: 314px;
+    }
+}
+
+.mt5 {
+    margin-top: 5px;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.mt15 {
+    margin-top: 15px;
+}

@@ -1,33 +1,37 @@
-import Login from '../views/login/index';
-import Home from '../views/home/index';
+import Layout from '../views/layout/index';
+import UserManagement from '../views/userManagement/index';
+import UserProfile from '../views/userProfile/index';
 export default [
     {
         path: '/',
-        name: 'root',
-        redirect: '/home',
+        name: 'layout',
+        redirect: '/userManagement',
         meta: {
-            title: '首页',
+            title: 'Layout',
             auth: false
         },
-        component: Home
-    },
-    {
-        path: '/login',
-        name: 'login',
-        meta: {
-            title: '登录',
-            auth: false
-        },
-        component: Login
-    },
-    {
-        path: '/home',
-        name: 'home',
-        meta: {
-            title: '首页',
-            auth: false
-        },
-        component: Home
-    },
+        component: Layout,
+        children: [
+            {
 
+                path: 'userManagement',
+                name: 'userManagement',
+                meta: {
+                    title: '用户管理',
+                    auth: false
+                },
+                component: UserManagement
+            },
+            {
+
+                path: 'userProfile',
+                name: 'userProfile',
+                meta: {
+                    title: '用户画像',
+                    auth: false
+                },
+                component: UserProfile
+            }
+        ]
+    },
 ]

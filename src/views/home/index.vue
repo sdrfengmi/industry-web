@@ -10,12 +10,7 @@
       @handleCurrentChange="handleCurrentChange"
     >
       <template v-slot:opt>
-        <el-table-column
-          align="center"
-          prop="opt"
-          label="操作"
-          width="150"
-        >
+        <el-table-column align="center" prop="opt" label="操作" width="150">
           <template slot-scope="scope">
             <el-button type="text" @click="onClick(scope.row)">整改</el-button>
             <el-button type="text" @click="onClick(scope.row)">详情</el-button>
@@ -33,11 +28,6 @@ export default {
   name: "homeComponent",
   data() {
     return {
-      pageOption: {
-        total: 0,
-        pageSize: 10,
-        pageNum: 1,
-      },
       column: [
         {
           prop: "zyxh",
