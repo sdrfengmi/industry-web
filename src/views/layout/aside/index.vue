@@ -16,6 +16,7 @@
           <span>用户管理</span>
         </template>
         <el-menu-item index="/userManagement">用户管理</el-menu-item>
+        <el-menu-item index="/userProfile">用户画像</el-menu-item>
       </el-submenu>
       <el-menu-item index="/userProfile">
         <i class="el-icon-menu"></i>
