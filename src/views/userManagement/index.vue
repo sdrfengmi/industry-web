@@ -26,6 +26,7 @@
             >添加用户</el-button
           >
         </div>
+        <!-- 搜索 -->
         <div>
           <SearchForm
             class="main-search-form"
@@ -108,6 +109,11 @@ export default {
         },
       ],
     };
+  },
+
+  //启动界面钩子函数
+    created() {
+    this.getCateList()
   },
   methods: {
     showDialog() {
