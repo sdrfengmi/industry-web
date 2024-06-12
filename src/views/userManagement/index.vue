@@ -18,52 +18,55 @@
       <div class="top_button">
         <div class="button-wrapper">
           <el-button
-            style="margin-right: 10px"
-            type="primary"
-            icon="el-icon-puls"
-            size="small"
-            @click="showDialog"
-            >添加用户</el-button
+              style="margin-right: 10px"
+              type="primary"
+              icon="el-icon-puls"
+              size="small"
+              @click="showDialog"
+          >添加用户
+          </el-button
           >
         </div>
         <!-- 搜索 -->
         <div>
           <SearchForm
-            class="main-search-form"
-            :fileds="searchFileds"
-            @submit="search"
+              class="main-search-form"
+              :fileds="searchFileds"
+              @submit="search"
           />
         </div>
       </div>
       <BaseTable
-        :column="column"
-        class="table-fixed-wrapper"
-        :maxHeight="'calc(100vh - 320px)'"
-        :data="tableData"
-        :pageOption="pageOption"
-        @handleSizeChange="handleSizeChange"
-        @handleCurrentChange="handleCurrentChange"
+          :column="column"
+          class="table-fixed-wrapper"
+          :maxHeight="'calc(100vh - 320px)'"
+          :data="tableData"
+          :pageOption="pageOption"
+          @handleSizeChange="handleSizeChange"
+          @handleCurrentChange="handleCurrentChange"
       >
         <template v-slot:opt>
           <el-table-column align="center" prop="opt" label="操作" width="150">
             <template slot-scope="scope">
               <el-button type="text" @click="onClick(scope.row)"
-                >编辑</el-button
+              >编辑
+              </el-button
               >
             </template>
           </el-table-column>
         </template>
       </BaseTable>
     </div>
-    <Edit ref="edit" @createCallback="createCallback" />
+    <Edit ref="edit" @createCallback="createCallback"/>
   </div>
 </template>
 <script>
 import SearchForm from "@/components/base-search/searchForm.vue";
 import tablePageMixin from "@/components/base-table/tablePageMixin";
 import Edit from "./edit.vue";
+
 export default {
-  components: { SearchForm, Edit },
+  components: {SearchForm, Edit},
   mixins: [tablePageMixin],
   name: "userManagement",
   data() {
@@ -112,10 +115,12 @@ export default {
   },
 
   //启动界面钩子函数
-    created() {
+  created() {
     this.getCateList()
   },
   methods: {
+    getCateList() {
+    },
     showDialog() {
       this.$refs.edit.showDialog();
     },
@@ -135,27 +140,33 @@ export default {
 .top {
   display: flex;
 }
+
 .container-wrapper {
   padding-top: 0;
 }
+
 .top_button {
   margin: 0 -10px 0;
 }
+
 .card-wrapper {
   flex: 1;
   background-color: #fff;
   margin-right: 10px;
   border-radius: 4px;
   padding: 10px 40px;
+
   .card-label {
     color: #888;
     line-height: 28px;
   }
+
   .card-value {
     color: #333;
     font-size: 28px;
     line-height: 32px;
   }
+
   &:last-child {
     margin-right: 0;
   }

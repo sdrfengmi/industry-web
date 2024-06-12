@@ -1,13 +1,5 @@
 <template>
   <div class="aside-wrapper">
-    <el-container class="home-container" style="height: 100vh;">
-      <el-header style="width: 100%;">
-        <img src="src/assets/logo.png" alt="">
-        <!-- 顶部标题 -->
-        <span>测试你的b班值不值</span>
-      </el-header>
-      <el-container>
-        <el-aside width="200px">
           <el-menu
               default-active="1"
               class="el-menu-vertical-customer"
@@ -34,6 +26,7 @@
                 {{ subItem.title }}
               </el-menu-item>
             </el-submenu>
+          </el-menu>
             <!--
             <el-submenu index="1">
               <template slot="title">
@@ -56,20 +49,18 @@
               <span slot="title">用户画像</span>
             </el-menu-item>
           -->
-          </el-menu>
-        </el-aside>
-        <el-main>
-          <component :is="activeView"></component>
-        </el-main>
-      </el-container>
-    </el-container>
+
+  <!--    <el-main>-->
+  <!--      <component :is="activeView"></component>-->
+  <!--    </el-main>-->
   </div>
 </template>
 <script>
 // 导入组件
 import UserManagement from '../../userManagement';
 import UserProfile from '../../userProfile';
-import SystemSettings from '/src/views/userProfile';
+import SystemSettings from '../../userProfile';
+// import SystemSettings from '/src/views/userProfile';
 
 export default {
   components: {
@@ -87,8 +78,8 @@ export default {
           title: '用户管理',
           icon: 'el-icon-location',
           subMenu: [
-            { index: 'userManagement', title: '用户列表', component: 'UserManagement' },
-            { index: 'userProfile', title: '用户画像', component: 'UserProfile' }
+            {index: 'userManagement', title: '用户列表', component: 'UserManagement'},
+            {index: 'userProfile', title: '用户画像', component: 'UserProfile'}
           ]
         },
         {
@@ -96,7 +87,7 @@ export default {
           title: '系统管理',
           icon: 'el-icon-setting',
           subMenu: [
-            { index: 'systemSettings', title: '系统设置', component: 'SystemSettings' }
+            {index: 'systemSettings', title: '系统设置', component: 'SystemSettings'}
           ]
         }
         // 可以根据需要添加更多的菜单项
@@ -143,7 +134,8 @@ export default {
 }
 
 .el-header {
-  background-color: #373d41;
+  //background-color: #373d41;
+  background-color: #B3C0D1;
   display: flex;
   justify-content: space-between;
   padding-left: 0;
