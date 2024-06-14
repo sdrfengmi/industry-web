@@ -3,7 +3,7 @@
   <div style="display: flex; justify-content: space-between; align-items: center;">
     <img src="../../../assets/logo.png" alt="">
     <!-- 顶部标题 -->
-    <span style="margin-left: auto;">测试你的b班值不值水电费水电费水电费手动阀四大分三大放大时sdfsdfsdfsdfsdfsdsf
+    <span style="margin-left: auto;">测试你的b班值不值
     </span>
     <el-button style="margin-left:1024px" type="info" @click="logout">
       退出

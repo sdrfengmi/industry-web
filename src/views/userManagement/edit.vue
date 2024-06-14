@@ -1,22 +1,22 @@
 <template>
   <div>
     <el-dialog
-      :title="listItem && listItem.id ? '修改用户' : '添加用户'"
-      :visible.sync="dialogVisible"
-      append-to-body
-      :close-on-click-modal="false"
-      @close="reset"
-      top="4vh"
-      width="660px"
+        :title="listItem && listItem.id ? '修改用户' : '添加用户'"
+        :visible.sync="dialogVisible"
+        append-to-body
+        :close-on-click-modal="false"
+        @close="reset"
+        top="4vh"
+        width="660px"
     >
       <BaseForm
-        v-if="dialogVisible"
-        labelWidth="85px"
-        :span="12"
-        ref="form"
-        :formModel="form"
-        :rules="rules"
-        :fileds="fileds"
+          v-if="dialogVisible"
+          labelWidth="85px"
+          :span="12"
+          ref="form"
+          :formModel="form"
+          :rules="rules"
+          :fileds="fileds"
       />
       <span slot="footer" class="dialog-footer">
         <el-button size="small" @click="dialogVisible = false">取 消</el-button>
@@ -29,14 +29,16 @@
 
 <script>
 import BaseForm from "@/components/base-form/baseForm.vue";
-import { create, update } from "@/api/api/index";
+import {create, update} from "@/api/api/index";
 import enumeArr from "@/utils/enumeArr.js";
+
 export default {
   name: "editUserManagement",
   props: {
     listItem: {
       type: Object,
-      default: () => {},
+      default: () => {
+      },
     },
   },
 
@@ -46,7 +48,7 @@ export default {
       fileds: [
         {
           label: "用户名称",
-          prop: "yhmc",
+          prop: "zyxh",
           type: "input",
         },
         {
@@ -67,20 +69,20 @@ export default {
         },
       ],
       form: {
-        yhmc: undefined,
+        zyxh: undefined,
         sshy: undefined,
         yx: undefined,
         gl: undefined,
       },
       rules: {
         yhmc: [
-          { required: true, message: "请输入用户名称", trigger: "change" },
+          {required: true, message: "请输入用户名称", trigger: "change"},
         ],
         sshy: [
-          { required: true, message: "请选择所属行业", trigger: "change" },
+          {required: true, message: "请选择所属行业", trigger: "change"},
         ],
-        yx: [{ required: true, message: "请输入月薪", trigger: "change" }],
-        gl: [{ required: true, message: "请输入工龄", trigger: "change" }],
+        yx: [{required: true, message: "请输入月薪", trigger: "change"}],
+        gl: [{required: true, message: "请输入工龄", trigger: "change"}],
       },
     };
   },
@@ -111,8 +113,11 @@ export default {
         ...listItem,
       };
     },
-    showDialog() {
+    showDialog(row) {
       this.dialogVisible = true;
+      if (row) {
+        this.form = row;
+      }
     },
     query() {
       let params = {
@@ -157,6 +162,7 @@ export default {
 :deep(.el-dialog .el-dialog__header) {
   border-bottom: 1px solid #f0f2f6;
 }
+
 :deep(.el-dialog__body) {
   padding: 15px 20px;
   max-height: calc(100vh - 200px);

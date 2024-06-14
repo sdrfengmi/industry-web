@@ -57,15 +57,19 @@
         </template>
       </BaseTable>
     </div>
+    <!-- 父类调用子组件   ref 是给这个组件起一个名字,ref="edit"  下面this.$refs.edit才能引用这个组件,  后面.showDialog能直接调用这个组件的方法-->
+    <!-- 子组件调用父类   @createCallback="createCallback": 这是一个事件监听器(event listener)，它监听子组件Edit触发的createCallback事件。当子组件触发这个事件时，父组件中定义的createCallback方法会被调用。-->
     <Edit ref="edit" @createCallback="createCallback"/>
   </div>
 </template>
 <script>
 import SearchForm from "@/components/base-search/searchForm.vue";
 import tablePageMixin from "@/components/base-table/tablePageMixin";
+// 导入子组件
 import Edit from "./edit.vue";
 
 export default {
+  // 注册子组件 ,先导入后注册
   components: {SearchForm, Edit},
   mixins: [tablePageMixin],
   name: "userManagement",
@@ -80,19 +84,19 @@ export default {
       ],
       column: [
         {
-          prop: "zyxh",
+          prop: "yhmc",
           label: "用户名",
           width: 150,
           ellipsis: true,
         },
         {
-          prop: "ctdsl",
+          prop: "sshy",
           label: "行业",
           width: 150,
           ellipsis: true,
         },
         {
-          prop: "jydw",
+          prop: "yx",
           label: "月薪",
           width: 150,
           ellipsis: true,
@@ -106,9 +110,10 @@ export default {
       ],
       tableData: [
         {
-          zyxh: "张三",
-          ctdsl: "2024-04-03 12:23:22",
-          jydw: "同意",
+          yhmc: "张三",
+          sshy: "2024-04-03 12:23:22",
+          yx: "5000",
+          gl: 20,
         },
       ],
     };
@@ -116,16 +121,16 @@ export default {
 
   //启动界面钩子函数
   created() {
-    this.getCateList()
+    // this.getCateList()
   },
   methods: {
-    getCateList() {
-    },
     showDialog() {
-      this.$refs.edit.showDialog();
+      this.$refs.edit.showDialog(null);
     },
     onClick(row) {
-      console.log(row);
+      //修改用户
+      this.$refs.edit.showDialog(row);
+      // console.log(row);
     },
     search(form) {
       console.log(form);
