@@ -1,4 +1,5 @@
 import BaseTable from './baseTable.vue'
+
 export default {
     data() {
         return {
@@ -15,6 +16,9 @@ export default {
         BaseTable,
     },
     methods: {
+        init(val) {
+
+        },
         handleSizeChange(val) {
             this.pageOption.pageSize = val;
             this.pageOption.pageNum = 1;

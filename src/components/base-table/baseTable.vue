@@ -22,7 +22,7 @@
         width="55"
       ></el-table-column>
       <el-table-column
-        v-for="(item, index) in column"
+        v-for="(item, index) in filteredColumns"
         :key="index"
         :align="item.align || 'center'"
         :prop="item.prop"
@@ -109,6 +109,11 @@ export default {
     handleSelectionChange(val) {
       this.$emit("handleSelectionChange", val);
     },
+  },
+  computed: {
+    filteredColumns() {
+      return this.column.filter(column => column.visible==null || column.visible);
+    }
   },
 };
 </script>

@@ -22,10 +22,9 @@
               type="primary"
               icon="el-icon-puls"
               size="small"
-              @click="showDialog"
+              @click="addUser"
           >添加用户
-          </el-button
-          >
+          </el-button>
         </div>
         <!-- 搜索 -->
         <div>
@@ -48,10 +47,7 @@
         <template v-slot:opt>
           <el-table-column align="center" prop="opt" label="操作" width="150">
             <template slot-scope="scope">
-              <el-button type="text" @click="onClick(scope.row)"
-              >编辑
-              </el-button
-              >
+              <el-button type="text" @click="editUser(scope.row)">编辑</el-button>
             </template>
           </el-table-column>
         </template>
@@ -67,6 +63,8 @@ import SearchForm from "@/components/base-search/searchForm.vue";
 import tablePageMixin from "@/components/base-table/tablePageMixin";
 // 导入子组件
 import Edit from "./edit.vue";
+import {queryPage} from "@/api/api/userApi";
+import axios from 'axios';
 
 export default {
   // 注册子组件 ,先导入后注册
@@ -84,36 +82,138 @@ export default {
       ],
       column: [
         {
-          prop: "yhmc",
+          prop: "id",
+          label: "序号",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "userName",
           label: "用户名",
           width: 150,
           ellipsis: true,
         },
         {
-          prop: "sshy",
-          label: "行业",
+          prop: "age",
+          label: "年龄",
           width: 150,
           ellipsis: true,
         },
         {
-          prop: "yx",
+          prop: "workAge",
+          label: "工龄",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "sex",
+          label: "性别",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "workName",
+          label: "工作名称",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "industryId",
+          label: "行业id",
+          width: 150,
+          ellipsis: false,
+        },
+        {
+          prop: "industryName",
+          label: "行业名称",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "cityId",
+          label: "城市id",
+          width: 150,
+          ellipsis: false,
+        },
+        {
+          prop: "cityName",
+          label: "城市名称",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "education",
+          label: "学历",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "oppositeSexRatio",
+          label: "异性比例",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "stressLevel",
+          label: "压力程度",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "workRequire",
+          label: "工作要求",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "commuterTime",
+          label: "通勤时长h",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "restTime",
+          label: "摸鱼时长h",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "workTime",
+          label: "每天工作时长",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "workDay",
+          label: "每周工作天数",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "moneyList",
+          label: "钞能力",
+          width: 150,
+          ellipsis: true,
+        },
+        {
+          prop: "monthSalary",
           label: "月薪",
           width: 150,
           ellipsis: true,
         },
         {
-          prop: "gl",
-          label: "工龄",
+          prop: "yearSalary",
+          label: "年薪",
           width: 150,
           ellipsis: true,
         },
       ],
       tableData: [
         {
-          yhmc: "张三",
-          sshy: "2024-04-03 12:23:22",
-          yx: "5000",
-          gl: 20,
+          userName: "张三",
+          age: 18,
+          workAge: 5,
+          sex: "男",
         },
       ],
     };
@@ -121,16 +221,24 @@ export default {
 
   //启动界面钩子函数
   created() {
-    // this.getCateList()
+    const params = {"pageSize": 10, "pageNum": 0};
+    this.queryPage(params)
   },
   methods: {
-    showDialog() {
+    queryPage(params) {
+      queryPage(params).then(response => {
+        // this.tableData=response.data.records;
+        console.log("结果")
+        // this.tableData=[]
+        console.log(this.tableData)
+      });
+    },
+    addUser() {
       this.$refs.edit.showDialog(null);
     },
-    onClick(row) {
+    editUser(row) {
       //修改用户
       this.$refs.edit.showDialog(row);
-      // console.log(row);
     },
     search(form) {
       console.log(form);

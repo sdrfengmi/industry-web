@@ -109,6 +109,8 @@ export function createRequest() {
     if (token && token !== 'undefined') breanToken = 'Bearer ' + token
     const configDefault = {
       headers: {
+        'ccess-Control-Allow-Origin':'*',
+        'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type, Accept',
         Authorization: breanToken,
         'Content-Type': get(config, 'headers.Content-Type', 'application/json')
       },
