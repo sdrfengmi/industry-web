@@ -84,138 +84,147 @@ export default {
         {
           prop: "id",
           label: "序号",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "userName",
           label: "用户名",
-          width: 150,
+          width: 100,
           ellipsis: true,
         },
         {
           prop: "age",
           label: "年龄",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "workAge",
           label: "工龄",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "sex",
           label: "性别",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "workName",
           label: "工作名称",
-          width: 150,
+          width: 100,
           ellipsis: true,
         },
         {
           prop: "industryId",
           label: "行业id",
-          width: 150,
+          width: 50,
           ellipsis: false,
+          visible: false
         },
         {
           prop: "industryName",
           label: "行业名称",
-          width: 150,
+          width: 50,
           ellipsis: true,
+          visible: false
         },
         {
           prop: "cityId",
           label: "城市id",
-          width: 150,
+          width: 50,
           ellipsis: false,
+          visible: false
         },
         {
           prop: "cityName",
           label: "城市名称",
-          width: 150,
+          width: 100,
           ellipsis: true,
         },
         {
           prop: "education",
           label: "学历",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "oppositeSexRatio",
           label: "异性比例",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "stressLevel",
           label: "压力程度",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "workRequire",
           label: "工作要求",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "commuterTime",
           label: "通勤时长h",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "restTime",
           label: "摸鱼时长h",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "workTime",
           label: "每天工作时长",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "workDay",
           label: "每周工作天数",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "moneyList",
           label: "钞能力",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "monthSalary",
           label: "月薪",
-          width: 150,
+          width: 50,
           ellipsis: true,
         },
         {
           prop: "yearSalary",
           label: "年薪",
-          width: 150,
+          width: 60,
           ellipsis: true,
         },
       ],
       tableData: [
-        {
-          userName: "张三",
-          age: 18,
-          workAge: 5,
-          sex: "男",
-        },
+        // {
+        //   id: 10,
+        //   userName: "张三",
+        //   age: 18,
+        //   workAge: 5,
+        //   sex: "男",
+        // },
       ],
+      pageOption: {
+        total: 0,
+        pageNum: 1,
+        pageSize: 10,
+      }
     };
   },
 
@@ -228,8 +237,13 @@ export default {
     queryPage(params) {
       queryPage(params).then(response => {
         // this.tableData=response.data.records;
+        // Array.prototype.push.apply(this.tableData, response.data.records);
+        this.tableData = response.data.records
+        this.pageOption.total = response.data.total
+        this.pageOption.pageNum = response.data.current
+        this.pageOption.pageSize = response.data.size
         console.log("结果")
-        // this.tableData=[]
+        console.log(response.data.records)
         console.log(this.tableData)
       });
     },
