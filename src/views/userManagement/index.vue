@@ -41,6 +41,7 @@
           :maxHeight="'calc(100vh - 320px)'"
           :data="tableData"
           :pageOption="pageOption"
+          @submit="search"
           @handleSizeChange="handleSizeChange"
           @handleCurrentChange="handleCurrentChange"
       >
@@ -76,8 +77,27 @@ export default {
       searchFileds: [
         {
           label: "用户名",
-          prop: "keyword",
+          prop: "userName",
           type: "input",
+        },
+        {
+          label: "年龄",
+          prop: "age",
+          type: "input",
+        },
+        {
+          label: "城市",
+          prop: "cityName",
+          type: "input",
+        },
+        {
+          label: "性别",
+          prop: "sex",
+          type: "select",
+          options: [
+            {key: 1, value: 1, label: "男"},
+            {key: 2, value: 2, label: "女"}
+          ],
         },
       ],
       column: [
@@ -255,6 +275,7 @@ export default {
       this.$refs.edit.showDialog(row);
     },
     search(form) {
+      this.queryPage(form)
       console.log(form);
     },
     createCallback() {

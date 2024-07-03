@@ -29,7 +29,7 @@
 
 <script>
 import BaseForm from "@/components/base-form/baseForm.vue";
-import {create, update} from "@/api/api/index";
+import {create, update} from "@/api/api/userApi";
 import enumeArr from "@/utils/enumeArr.js";
 
 export default {
