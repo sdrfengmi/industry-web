@@ -14,7 +14,7 @@
           labelWidth="85px"
           :span="12"
           ref="form"
-          :formModel="form"
+          :formModelF="form"
           :rules="rules"
           :fileds="fileds"
       />
@@ -47,35 +47,114 @@ export default {
       dialogVisible: false,
       fileds: [
         {
-          label: "用户名称",
-          prop: "zyxh",
+          prop: "userName",
+          label: "用户名",
           type: "input",
         },
         {
-          label: "所属行业",
-          prop: "sshy",
+          prop: "age",
+          label: "年龄",
+          type: "input",
+        },
+        {
+          prop: "workAge",
+          label: "工龄",
+          type: "input",
+        },
+        {
+          prop: "sex",
+          label: "性别",
+          type: "input",
+        },
+        {
+          prop: "workName",
+          label: "工作名称",
+          type: "input",
+        },
+        {
+          prop: "industryName",
+          label: "行业名称",
           type: "select",
           options: enumeArr["getOption"](enumeArr["hyArr"]),
         },
         {
-          label: "月薪",
-          prop: "yx",
+          prop: "cityName",
+          label: "城市名称",
           type: "input",
         },
         {
-          label: "工龄",
-          prop: "gl",
+          prop: "education",
+          label: "学历",
+          type: "select",
+          options: enumeArr["getOption"](enumeArr["hyArr"]),
+        },
+        {
+          prop: "oppositeSexRatio",
+          label: "异性比例",
+          type: "select",
+          options: enumeArr["getOption"](enumeArr["hyArr"]),
+        },
+        {
+          prop: "stressLevel",
+          label: "压力程度",
+          type: "select",
+          options: enumeArr["getOption"](enumeArr["hyArr"]),
+        },
+        {
+          prop: "workRequire",
+          label: "工作要求",
+          type: "select",
+          options: enumeArr["getOption"](enumeArr["hyArr"]),
+        },
+        {
+          prop: "commuterTime",
+          label: "通勤时长h",
+          type: "select",
+          options: enumeArr["getOption"](enumeArr["hyArr"]),
+        },
+        {
+          prop: "restTime",
+          label: "摸鱼时长h",
+          type: "select",
+          options: enumeArr["getOption"](enumeArr["hyArr"]),
+        },
+        {
+          prop: "workTime",
+          label: "每天工时长",
+          type: "select",
+          options: enumeArr["getOption"](enumeArr["hyArr"]),
+        },
+        {
+          prop: "workDay",
+          label: "每周工天数",
+          type: "select",
+          options: enumeArr["getOption"](enumeArr["hyArr"]),
+        },
+        {
+          prop: "moneyList",
+          label: "钞能力",
+          type: "select",
+          options: enumeArr["getOption"](enumeArr["hyArr"]),
+        },
+        {
+          prop: "monthSalary",
+          label: "月薪",
+          type: "input",
+        },
+        {
+          prop: "yearSalary",
+          label: "年薪",
           type: "input",
         },
       ],
       form: {
-        zyxh: undefined,
-        sshy: undefined,
-        yx: undefined,
-        gl: undefined,
+        userName: undefined,
+        age: undefined,
+        cityName: undefined,
+        sex: undefined,
       },
       rules: {
-        yhmc: [
+        userName: [
           {required: true, message: "请输入用户名称", trigger: "change"},
         ],
         sshy: [

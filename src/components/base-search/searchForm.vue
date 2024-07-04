@@ -7,95 +7,96 @@
         class="searchForm"
     >
       <div class="form-wrapper">
-
-        <el-popover
-            v-if="moreFileds.length > 0 && showMoreFileds"
-            popper-class="search-popver"
-            placement="bottom-start"
-            ref="popover"
-            :offset="0"
-            trigger="click"
-            visible="true"
-        >
-          <div>
-            <el-form
-                :model="formModel"
-                label-position="right"
-                ref="searchForm"
-                class="searchForm"
-            >
-              <el-form-item
-                  v-for="(item, index) in moreFileds"
-                  :key="index"
-                  :style="{ width: item.width || '300px' }"
-                  :label-width="
+        <!--关闭搜索按钮-->
+        <!--        <el-popover-->
+        <!--            v-if="moreFileds.length > 0 && showMoreFileds"-->
+        <!--            popper-class="search-popver"-->
+        <!--            placement="bottom-start"-->
+        <!--            ref="popover"-->
+        <!--            :offset="0"-->
+        <!--            trigger="click"-->
+        <!--            visible="true"-->
+        <!--        >-->
+        <div>
+          <el-form
+              :model="formModel"
+              label-position="right"
+              ref="searchForm"
+              class="searchForm"
+          >
+            <el-form-item
+                v-for="(item, index) in moreFileds"
+                :key="index"
+                :style="{ width: item.width || '300px' }"
+                :label-width="
                   item.labelWidth
                     ? item.labelWidth + ' !important'
                     : '80px !important'
                 "
-                  :label="item.label"
-                  :prop="item.prop"
+                :label="item.label"
+                :prop="item.prop"
+            >
+              <el-input
+                  v-if="item.type == 'input'"
+                  :placeholder="`请输入${item.label}`"
+                  size="small"
+                  :clearable="true"
+                  v-model="formModel[item.prop]"
+              ></el-input>
+              <el-date-picker
+                  v-if="item.type == 'daterange'"
+                  style="width: 100%"
+                  size="small"
+                  v-model="formModel[item.prop]"
+                  type="daterange"
+                  range-separator="至"
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期"
               >
-                <el-input
-                    v-if="item.type == 'input'"
-                    :placeholder="`请输入${item.label}`"
-                    size="small"
-                    :clearable="true"
-                    v-model="formModel[item.prop]"
-                ></el-input>
-                <el-date-picker
-                    v-if="item.type == 'daterange'"
-                    style="width: 100%"
-                    size="small"
-                    v-model="formModel[item.prop]"
-                    type="daterange"
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
+              </el-date-picker>
+              <el-select
+                  v-if="item.type == 'select'"
+                  size="small"
+                  clearable
+                  style="width: 100%"
+                  v-model="formModel[item.prop]"
+                  :placeholder="`请选择${item.label}`"
+              >
+                <el-option
+                    v-for="i in item.options"
+                    :key="i.value"
+                    :label="i.label"
+                    :value="i.value"
                 >
-                </el-date-picker>
-                <el-select
-                    v-if="item.type == 'select'"
-                    size="small"
-                    clearable
-                    style="width: 100%"
-                    v-model="formModel[item.prop]"
-                    :placeholder="`请选择${item.label}`"
-                >
-                  <el-option
-                      v-for="i in item.options"
-                      :key="i.value"
-                      :label="i.label"
-                      :value="i.value"
-                  >
-                  </el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item
-                  :style="{
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item
+                :style="{
                   width: '173px',
                   textAlign: 'right',
                 }"
-                  label=""
+                label=""
+            >
+              <el-button
+                  size="small"
+                  icon="el-icon-search"
+                  type="primary"
+                  @click="submit"
+              >搜 索
+              </el-button
               >
-                <el-button
-                    size="small"
-                    icon="el-icon-search"
-                    type="primary"
-                    @click="submit"
-                >搜 索
-                </el-button
-                >
-                <el-button
-                    size="small"
-                    icon="el-icon-refresh-left"
-                    @click="reset"
-                >重 置
-                </el-button
-                >
-              </el-form-item>
-            </el-form>
-          </div>
+              <el-button
+                  size="small"
+                  icon="el-icon-refresh-left"
+                  @click="reset"
+              >重 置
+              </el-button
+              >
+            </el-form-item>
+          </el-form>
+        </div>
+        <!-- 搜索图标
           <div
               slot="reference"
               class="more-search-filed-icon"
@@ -114,8 +115,8 @@
                 srcset=""
             />
           </div>
-        </el-popover>
-
+          -->
+        <!--        </el-popover>-->
         <div v-if="showFirstFileds">
           <el-form-item
               :style="{ width: showFileds.width || '200px' }"
@@ -190,7 +191,7 @@ export default {
     // 新增两个开关属性
     showFirstFileds: {
       type: Boolean,
-      default: true
+      default: false
     },
     showMoreFileds: {
       type: Boolean,
