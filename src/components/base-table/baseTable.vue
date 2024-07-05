@@ -1,57 +1,67 @@
 <template>
   <div class="baseTable">
     <el-table
-      :height="height"
-      :max-height="maxHeight"
-      row-key="id"
-      size="small"
-      :header-cell-style="{
+        :height="height"
+        :max-height="maxHeight"
+        row-key="id"
+        size="small"
+        :header-cell-style="{
         backgroundColor: '#fafafa',
         fontSize: '14px',
         color: '#909399',
         textAlign: 'center',
       }"
-      @selection-change="handleSelectionChange"
-      :data="data"
+        @selection-change="handleSelectionChange"
+        :data="data"
+        stripe
     >
       <el-table-column
-        v-if="selection"
-        :align="'center'"
-        type="selection"
-        :selectable="selectable"
-        width="55"
+          v-if="selection"
+          :align="'center'"
+          type="selection"
+          :selectable="selectable"
+          width="55"
       ></el-table-column>
       <el-table-column
-        v-for="(item, index) in filteredColumns"
-        :key="index"
-        :align="item.align || 'center'"
-        :prop="item.prop"
-        :label="item.label"
-        :fixed="item.fixed"
-        :show-overflow-tooltip="item.ellipsis"
-        :width="item.width ? item.width : 100"
+          v-for="(item, index) in filteredColumns"
+          :key="index"
+          :align="item.align || 'center'"
+          :prop="item.prop"
+          :label="item.label"
+          :fixed="item.fixed"
+          :show-overflow-tooltip="item.ellipsis"
+          :width="item.width ? item.width : 100"
       >
         <template slot-scope="scope">
-          <ul v-if="item.type === 'list'" class="cell-ul">
-            <li v-for="(t, i) in scope.row[item.prop]" :key="i">
-              {{ t.key }}: {{ t.value }}
-            </li>
-          </ul>
-          {{ !item.type ? scope.row[item.prop] : "" }}
+          <!-- 只有当 item.formattedValue 是函数时才调用 -->
+          <span>{{
+              typeof item.formattedValue === 'function' ? item.formattedValue(scope.row) : scope.row[item.prop]
+            }}</span>
         </template>
+
+        <!-- 其他写法-->
+<!--        <template slot-scope="scope">-->
+<!--          <ul v-if="item.type === 'list'" class="cell-ul">-->
+<!--            <li v-for="(t, i) in scope.row[item.prop]" :key="i">-->
+<!--              {{ t.key }}: {{ t.value }}-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--          {{ !item.type ? scope.row[item.prop] : "" }}-->
+<!--        </template>-->
+
       </el-table-column>
       <slot name="opt"></slot>
     </el-table>
     <el-pagination
-      v-if="pageOption"
-      align="right"
-      background
-      layout="total, sizes, prev, pager, next"
-      :total="pageOption.total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :page-size="pageOption.pageSize"
-      :current-page="pageOption.pageNum"
+        v-if="pageOption"
+        align="right"
+        background
+        layout="total, sizes, prev, pager, next"
+        :total="pageOption.total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-size="pageOption.pageSize"
+        :current-page="pageOption.pageNum"
     >
     </el-pagination>
   </div>
@@ -98,7 +108,8 @@ export default {
     return {};
   },
   components: {},
-  created() {},
+  created() {
+  },
   methods: {
     handleSizeChange(val) {
       this.$emit("handleSizeChange", val);
@@ -112,8 +123,25 @@ export default {
   },
   computed: {
     filteredColumns() {
-      return this.column.filter(column => column.visible==null || column.visible);
-    }
+      // 使用 map 来转换列定义，并为需要的字段增加一个字典函数
+      return this.column.filter(column => column.visible == null || column.visible) // 过滤不展示的列
+          .map(column => {
+            // 创建新的对象以包含原始列定义和新的属性
+            const newColumn = {...column};
+
+            if (column.dict) {
+              // 为字典字段增加一个格式化值的函数
+              newColumn.formattedValue = (row) => {
+                // 使用 find 方法查找当前属性值对应的字典标签
+                const dictItem = column.dict.find(dict => dict.value === row[column.prop]);
+                // 返回找到的字典标签，如果没有找到则返回原始值
+                return dictItem ? dictItem.label : row[column.prop];
+              };
+            }
+            // 返回新的对象，包含原始列定义和格式化函数（如果有）
+            return newColumn;
+          });
+    },
   },
 };
 </script>
@@ -123,35 +151,44 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
 :deep(.el-table .cell) {
   font-weight: 400;
   font-size: 14px;
   padding-left: 5px;
   padding-right: 5px;
 }
+
 :deep(.el-pagination) {
   padding: 15px 0px;
 }
+
 :deep(.el-table__empty-block) {
   width: 100% !important;
 }
+
 :deep(.el-table__body),
 :deep(.el-table__header) {
   width: 100% !important;
 }
+
 :deep(.el-pagination__sizes .el-input__inner) {
   height: 28px;
   line-height: 28px;
 }
+
 :deep(.el-table__row .cell.el-tooltip) {
   width: 100% !important;
 }
+
 :deep(.el-table__fixed-right) {
   height: 100% !important;
 }
+
 :deep(.el-table__fixed) {
   height: 100% !important;
 }
+
 .cell-ul {
   list-style-type: none;
   padding: 0;

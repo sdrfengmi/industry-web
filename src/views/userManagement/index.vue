@@ -66,6 +66,7 @@ import tablePageMixin from "@/components/base-table/tablePageMixin";
 import Edit from "./edit.vue";
 import {queryPage} from "@/api/api/userApi";
 import axios from 'axios';
+import enumeArr from "@/utils/enumeArr.js";
 
 export default {
   // 注册子组件 ,先导入后注册
@@ -130,6 +131,7 @@ export default {
           label: "性别",
           width: 50,
           ellipsis: true,
+          dict: enumeArr["sexArr"]
         },
         {
           prop: "workName",
@@ -169,24 +171,28 @@ export default {
           label: "学历",
           width: 50,
           ellipsis: true,
+          dict: enumeArr["educationArr"]
         },
         {
           prop: "oppositeSexRatio",
           label: "异性比例",
           width: 50,
           ellipsis: true,
+          dict: enumeArr["oppositeSexRatioArr"]
         },
         {
           prop: "stressLevel",
           label: "压力程度",
           width: 50,
           ellipsis: true,
+          dict: enumeArr["stressLevelArr"]
         },
         {
           prop: "workRequire",
           label: "工作要求",
           width: 50,
           ellipsis: true,
+          dict: enumeArr["workRequireArr"]
         },
         {
           prop: "commuterTime",
@@ -205,12 +211,14 @@ export default {
           label: "每天工作时长",
           width: 50,
           ellipsis: true,
+          dict: enumeArr["workTimeArr"]
         },
         {
           prop: "workDay",
           label: "每周工作天数",
           width: 50,
           ellipsis: true,
+          dict: enumeArr["workDayArr"]
         },
         {
           prop: "moneyList",
