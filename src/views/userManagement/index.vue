@@ -35,15 +35,16 @@
           />
         </div>
       </div>
+      <!--      table数据-->
       <BaseTable
           :column="column"
           class="table-fixed-wrapper"
           :maxHeight="'calc(100vh - 320px)'"
           :data="tableData"
-          :pageOption="pageOption"
+          :pageOption="searchFormObj"
           @submit="search"
-          @handleSizeChange="handleSizeChange"
-          @handleCurrentChange="handleCurrentChange"
+          @handleSizeChange="handleSizeAndCurrentChange"
+          @handleCurrentChange="handleSizeAndCurrentChange"
       >
         <template v-slot:opt>
           <el-table-column align="center" prop="opt" label="操作" width="150">
@@ -61,7 +62,9 @@
 </template>
 <script>
 import SearchForm from "@/components/base-search/searchForm.vue";
-import tablePageMixin from "@/components/base-table/tablePageMixin";
+import BaseTable from '@/components/base-table/baseTable.vue'
+
+// import tablePageMixin from "@/components/base-table/tablePageMixin";
 // 导入子组件
 import Edit from "./edit.vue";
 import {queryPage} from "@/api/api/userApi";
@@ -70,8 +73,8 @@ import enumeArr from "@/utils/enumeArr.js";
 
 export default {
   // 注册子组件 ,先导入后注册
-  components: {SearchForm, Edit},
-  mixins: [tablePageMixin],
+  components: {SearchForm, BaseTable,Edit},
+  // mixins: [tablePageMixin],
   name: "userManagement",
   data() {
     return {
@@ -101,17 +104,22 @@ export default {
           ],
         },
       ],
+      searchFormObj: {
+        total: 0,
+        pageNum: 1,
+        pageSize: 10,
+      },
       column: [
         {
           prop: "id",
           label: "序号",
-          width: 50,
+          width: 35,
           ellipsis: true,
         },
         {
           prop: "userName",
           label: "用户名",
-          width: 100,
+          width: 60,
           ellipsis: true,
         },
         {
@@ -129,14 +137,14 @@ export default {
         {
           prop: "sex",
           label: "性别",
-          width: 50,
+          width: 40,
           ellipsis: true,
           dict: enumeArr["sexArr"]
         },
         {
           prop: "workName",
           label: "工作名称",
-          width: 100,
+          width: 60,
           ellipsis: true,
         },
         {
@@ -163,7 +171,7 @@ export default {
         {
           prop: "cityName",
           label: "城市名称",
-          width: 100,
+          width: 60,
           ellipsis: true,
         },
         {
@@ -197,13 +205,13 @@ export default {
         {
           prop: "commuterTime",
           label: "通勤时长h",
-          width: 50,
+          width: 60,
           ellipsis: true,
         },
         {
           prop: "restTime",
           label: "摸鱼时长h",
-          width: 50,
+          width: 60,
           ellipsis: true,
         },
         {
@@ -248,28 +256,30 @@ export default {
         //   sex: "男",
         // },
       ],
-      pageOption: {
-        total: 0,
-        pageNum: 1,
-        pageSize: 10,
-      }
+      // pageOption: {
+      //   total: 0,
+      //   pageNum: 1,
+      //   pageSize: 10,
+      // }
     };
   },
 
   //启动界面钩子函数
   created() {
     const params = {"pageSize": 10, "pageNum": 0};
-    this.queryPage(params)
+    this.queryPage()
   },
   methods: {
-    queryPage(params) {
-      queryPage(params).then(response => {
+    queryPage() {
+      // params.pageSize = this.pageOption.pageSize
+      // params.pageNum = this.pageOption.pageNum
+      queryPage(this.searchFormObj).then(response => {
         // this.tableData=response.data.records;
         // Array.prototype.push.apply(this.tableData, response.data.records);
         this.tableData = response.data.records
-        this.pageOption.total = response.data.total
-        this.pageOption.pageNum = response.data.current
-        this.pageOption.pageSize = response.data.size
+        this.searchFormObj.total = response.data.total
+        this.searchFormObj.pageNum = response.data.current
+        this.searchFormObj.pageSize = response.data.size
         console.log("结果")
         console.log(response.data.records)
         console.log(this.tableData)
@@ -283,8 +293,14 @@ export default {
       this.$refs.edit.showDialog(row);
     },
     search(form) {
-      this.queryPage(form)
+      this.searchFormObj = {...form};
+      this.queryPage()
       console.log(form);
+    },
+    handleSizeAndCurrentChange(val) {
+      this.searchFormObj = { ...val };
+      console.log("翻页:" + val);
+      this.queryPage()
     },
     createCallback() {
       console.log("12");

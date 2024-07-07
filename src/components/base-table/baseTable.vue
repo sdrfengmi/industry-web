@@ -14,6 +14,7 @@
         @selection-change="handleSelectionChange"
         :data="data"
         stripe
+        :row-style="getRowStyle"
     >
       <el-table-column
           v-if="selection"
@@ -40,14 +41,14 @@
         </template>
 
         <!-- 其他写法-->
-<!--        <template slot-scope="scope">-->
-<!--          <ul v-if="item.type === 'list'" class="cell-ul">-->
-<!--            <li v-for="(t, i) in scope.row[item.prop]" :key="i">-->
-<!--              {{ t.key }}: {{ t.value }}-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--          {{ !item.type ? scope.row[item.prop] : "" }}-->
-<!--        </template>-->
+        <!--        <template slot-scope="scope">-->
+        <!--          <ul v-if="item.type === 'list'" class="cell-ul">-->
+        <!--            <li v-for="(t, i) in scope.row[item.prop]" :key="i">-->
+        <!--              {{ t.key }}: {{ t.value }}-->
+        <!--            </li>-->
+        <!--          </ul>-->
+        <!--          {{ !item.type ? scope.row[item.prop] : "" }}-->
+        <!--        </template>-->
 
       </el-table-column>
       <slot name="opt"></slot>
@@ -57,9 +58,9 @@
         align="right"
         background
         layout="total, sizes, prev, pager, next"
-        :total="pageOption.total"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
+        :total="pageOption.total"
         :page-size="pageOption.pageSize"
         :current-page="pageOption.pageNum"
     >
@@ -111,14 +112,50 @@ export default {
   created() {
   },
   methods: {
+    // 更改行号
     handleSizeChange(val) {
-      this.$emit("handleSizeChange", val);
+      console.log("sizeChange", val)
+      const pageOptionCopy = {...this.pageOption}
+      pageOptionCopy.pageSize = val
+      pageOptionCopy.pageNum = 1
+      this.$emit("handleSizeChange", pageOptionCopy);
     },
+    // 更改页数
     handleCurrentChange(val) {
-      this.$emit("handleCurrentChange", val);
+      const pageOptionCopy = {...this.pageOption}
+      pageOptionCopy.pageNum = val
+      this.$emit("handleCurrentChange", pageOptionCopy);
     },
+    // 选择每一行
     handleSelectionChange(val) {
       this.$emit("handleSelectionChange", val);
+    },
+    // 根据行索引设置不同的颜色
+    getRowStyle({rowIndex}) {
+      // const colors = [
+      //   '#F5DEB3', // 小麦色
+      //   '#ADD8E6', // 浅蓝色
+      //   '#FAEBD7', // 米黄色
+      //   '#90EE90'  // 浅绿色
+      // ];
+      const colors = [
+        '#FFD700',  // 金色
+        '#FF6347',  // 西红柿色
+        '#FF8C00',  // 暗橙色
+        '#FFA07A',  // 浅珊瑚色
+        '#32CD32',  // 酸橙绿
+        '#4CAF50',  // 绿色
+        '#00BFFF',  // 皇家蓝
+        '#8A2BE2',  // 蓝紫罗兰
+        '#DA70D6',  // 兰花紫
+        '#FF69B4',  // 粉色
+        '#CD5C5C',  // 印度红
+        '#00FFFF',  // 浅蓝色（青色）
+        '#9400D3',  // 深紫罗兰
+      ];
+      return {
+        backgroundColor: colors[rowIndex % colors.length]
+      };
     },
   },
   computed: {
