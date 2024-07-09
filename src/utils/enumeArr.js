@@ -1,18 +1,18 @@
 // 行业
 const hyArr = [
-    {text: "计算机软件", code: '01'}, {text: "电子通讯", code: '02'}, {text: "家政服务", code: '03'}
+    {label: "计算机软件", value: '01'}, {label: "电子通讯", code: '02'}, {label: "家政服务", value: '03'}
 ]
 //性别
-const sexArr = [{label: "男", value: 1}, {label: "女", value: 2}]
+const sexArr = [{label: "男", code: 1}, {label: "女", value: 2}]
 //工作天数
 const workDayArr = [
-    {label: "1天", value: 1}, {label: "1天", value: 2}, {label: "1天", value: 3}, {label: "1天", value: 4},
-    {label: "5天", value: 5}, {label: "5.5天", value: 5.5}, {label: "1天", value: 6}, {label: "1天", value: 7}
+    {label: "2天", value: 2}, {label: "3天", value: 3}, {label: "4天", value: 4},
+    {label: "5天", value: 5}, {label: "5.5天", value: 5.5}, {label: "6天", value: 6}, {label: "7天", value: 7}
 ]
 //工作时长
 const workTimeArr = [
-    {label: "6h", value: 6}, {label: "7h", value: 7}, {label: "8h", value: 8},
-    {label: "9h", value: 9}, {label: "10h", value: 10}
+    {label: "6", value: 6}, {label: "7", value: 7}, {label: "8", value: 8}, {label: "9", value: 9},
+    {label: "10", value: 10}, {label: "11", value: 11}, {label: "12", value: 12}
 ]
 //异性比例
 const oppositeSexRatioArr = [
@@ -20,7 +20,10 @@ const oppositeSexRatioArr = [
 ]
 // 压力程度
 const stressLevelArr = [
-    {label: "无压力", value: 1}, {label: "有点压力", value: 2}, {label: "压力很大", value: 3}, {label: "接近崩溃", value: 4}
+    {label: "无压力", value: 1}, {label: "有点压力", value: 2}, {label: "压力很大", value: 3}, {
+        label: "接近崩溃",
+        value: 4
+    }
 ]
 // 工作稳定性(1:稳得一批,2:一般,3:不稳定,4:经常裁员)
 const workSteadyArr = [
@@ -36,7 +39,6 @@ const educationArr = [
     {label: "家里蹲", value: 1}, {label: "大专", value: 2}, {label: "本科", value: 3}, {label: "211/985本科", value: 4},
     {label: "研究生", value: 5}, {label: "博士", value: 6}, {label: "博士后", value: 7}
 ]
-
 
 
 function getTextByCode(data, code) {
@@ -61,5 +63,13 @@ function getOption(data) {
 export default {
     getTextByCode,
     getOption,
-    hyArr, sexArr, workDayArr, workTimeArr,educationArr,oppositeSexRatioArr,stressLevelArr,workSteadyArr,workRequireArr
+    hyArr,
+    sexArr,
+    workDayArr,
+    workTimeArr,
+    educationArr,
+    oppositeSexRatioArr,
+    stressLevelArr,
+    workSteadyArr,
+    workRequireArr
 }

@@ -64,7 +64,8 @@ export default {
         {
           prop: "sex",
           label: "性别",
-          type: "input",
+          type: "select",
+          options: enumeArr["sexArr"],
         },
         {
           prop: "workName",
@@ -75,7 +76,7 @@ export default {
           prop: "industryName",
           label: "行业名称",
           type: "select",
-          options: enumeArr["getOption"](enumeArr["hyArr"]),
+          options: enumeArr["hyArr"],
         },
         {
           prop: "cityName",
@@ -86,55 +87,53 @@ export default {
           prop: "education",
           label: "学历",
           type: "select",
-          options: enumeArr["getOption"](enumeArr["hyArr"]),
+          options: enumeArr["educationArr"],
         },
         {
           prop: "oppositeSexRatio",
           label: "异性比例",
           type: "select",
-          options: enumeArr["getOption"](enumeArr["hyArr"]),
+          options: enumeArr["oppositeSexRatioArr"],
         },
         {
           prop: "stressLevel",
           label: "压力程度",
           type: "select",
-          options: enumeArr["getOption"](enumeArr["hyArr"]),
+          options: enumeArr["stressLevelArr"],
         },
         {
           prop: "workRequire",
           label: "工作要求",
           type: "select",
-          options: enumeArr["getOption"](enumeArr["hyArr"]),
+          options: enumeArr["workRequireArr"],
         },
         {
           prop: "commuterTime",
-          label: "通勤时长h",
-          type: "select",
-          options: enumeArr["getOption"](enumeArr["hyArr"]),
-        },
-        {
-          prop: "restTime",
-          label: "摸鱼时长h",
-          type: "select",
-          options: enumeArr["getOption"](enumeArr["hyArr"]),
-        },
-        {
-          prop: "workTime",
-          label: "每天工时长",
-          type: "select",
-          options: enumeArr["getOption"](enumeArr["hyArr"]),
+          label: "通勤时长m",
+          type: "input",
         },
         {
           prop: "workDay",
           label: "每周工天数",
           type: "select",
-          options: enumeArr["getOption"](enumeArr["hyArr"]),
+          options: enumeArr["workDayArr"],
         },
+        {
+          prop: "workTime",
+          label: "工作时长h",
+          type: "select",
+          options: enumeArr["workTimeArr"],
+        },
+        {
+          prop: "restTime",
+          label: "摸鱼时长h",
+          type: "input",
+        },
+
         {
           prop: "moneyList",
           label: "钞能力",
-          type: "select",
-          options: enumeArr["getOption"](enumeArr["hyArr"]),
+          type: "input",
         },
         {
           prop: "monthSalary",
@@ -148,6 +147,7 @@ export default {
         },
       ],
       form: {
+        // id: this.listItem["id"],TODO 为什么这里获取不到属性报错
         userName: undefined,
         age: undefined,
         cityName: undefined,
@@ -157,11 +157,11 @@ export default {
         userName: [
           {required: true, message: "请输入用户名称", trigger: "change"},
         ],
-        sshy: [
+        industryName: [
           {required: true, message: "请选择所属行业", trigger: "change"},
         ],
-        yx: [{required: true, message: "请输入月薪", trigger: "change"}],
-        gl: [{required: true, message: "请输入工龄", trigger: "change"}],
+        monthSalary: [{required: true, message: "请输入月薪", trigger: "change"}],
+        yearSalary: [{required: true, message: "请输入工龄", trigger: "change"}],
       },
     };
   },
@@ -203,14 +203,18 @@ export default {
         ...this.form,
         sshymc: enumeArr["getTextByCode"](enumeArr["hyArr"], this.form.sshy),
       };
-      if (params.id) {
-        update(params).then(() => {
+      let formData = this.$refs.form.formModel;
+      console.log("体检参数来了")
+      console.log(params)
+      console.log(formData)
+      if (formData.id) {
+        update(formData).then(() => {
           this.$message.success("修改成功！");
           this.dialogVisible = false;
           this.$emit("updateCallback", params);
         });
       } else {
-        create(params).then(() => {
+        create(formData).then(() => {
           this.$message.success("创建成功！");
           this.dialogVisible = false;
           this.$emit("createCallback", params);
