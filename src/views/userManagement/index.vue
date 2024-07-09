@@ -35,11 +35,11 @@
           />
         </div>
       </div>
-      <!--      table数据-->
+      <!--      table数据 全屏:maxHeight="'calc(100vh - 320px)'"  固定表头表格内容拉取 :height="250"-->
       <BaseTable
           :column="column"
           class="table-fixed-wrapper"
-          :maxHeight="'calc(100vh - 320px)'"
+          :height="600"
           :data="tableData"
           :pageOption="searchFormObj"
           @submit="search"
