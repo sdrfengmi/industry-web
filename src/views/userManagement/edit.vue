@@ -29,7 +29,7 @@
 
 <script>
 import BaseForm from "@/components/base-form/baseForm.vue";
-import {create, update} from "@/api/api/userApi";
+import {create, queryDictionaryList, update} from "@/api/api/userApi";
 import enumeArr from "@/utils/enumeArr.js";
 
 export default {
@@ -54,7 +54,7 @@ export default {
         {
           prop: "age",
           label: "年龄",
-          type: "input",
+          type: "integer",
         },
         {
           prop: "workAge",
@@ -81,7 +81,8 @@ export default {
         {
           prop: "cityName",
           label: "城市名称",
-          type: "input",
+          type: "select",
+          options: enumeArr["cityNameArr"],
         },
         {
           prop: "education",
@@ -100,6 +101,12 @@ export default {
           label: "压力程度",
           type: "select",
           options: enumeArr["stressLevelArr"],
+        },
+        {
+          prop: "workSteady",
+          label: "工作稳定性",
+          type: "select",
+          options: enumeArr["workSteadyArr"],
         },
         {
           prop: "workRequire",
@@ -148,20 +155,14 @@ export default {
       ],
       form: {
         // id: this.listItem["id"],TODO 为什么这里获取不到属性报错
-        userName: undefined,
-        age: undefined,
-        cityName: undefined,
-        sex: undefined,
+        sex: 1,
       },
       rules: {
-        userName: [
-          {required: true, message: "请输入用户名称", trigger: "change"},
-        ],
-        industryName: [
-          {required: true, message: "请选择所属行业", trigger: "change"},
-        ],
-        monthSalary: [{required: true, message: "请输入月薪", trigger: "change"}],
-        yearSalary: [{required: true, message: "请输入工龄", trigger: "change"}],
+        userName: [{required: true, message: "请输入用户名称", trigger: "blur"},],
+        age: [{required: true, message: "请输入用户名称", trigger: "blur"},],
+        industryName: [{required: true, message: "请选择所属行业", trigger: "change"},],
+        monthSalary: [{required: true, message: "请输入月薪", trigger: "blur"}],
+        yearSalary: [{required: true, message: "请输入工龄", trigger: 'blur'}],
       },
     };
   },
@@ -173,6 +174,8 @@ export default {
     if (this.listItem && this.listItem.id) {
       this.formatForm(this.listItem);
     }
+  },
+  created() {
   },
   methods: {
     reset() {
