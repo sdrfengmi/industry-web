@@ -115,6 +115,8 @@
             <el-select
               v-if="item.type == 'select'"
               :disabled="item.disabled"
+              filterable
+              clearable
               size="small"
               style="width: 100%"
               v-model="formModel[item.prop]"

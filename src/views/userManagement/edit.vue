@@ -19,6 +19,7 @@
           :fileds="fileds"
       />
       <span slot="footer" class="dialog-footer">
+        <el-button size="small" type="warning" @click="analysis">分 析</el-button>
         <el-button size="small" @click="dialogVisible = false">取 消</el-button>
         <el-button size="small" type="primary" @click="submit">确 定</el-button>
       </span>
@@ -29,7 +30,7 @@
 
 <script>
 import BaseForm from "@/components/base-form/baseForm.vue";
-import {create, queryDictionaryList, update} from "@/api/api/userApi";
+import {analysis, create, update, queryDictionaryList} from "@/api/api/userApi";
 import enumeArr from "@/utils/enumeArr.js";
 
 export default {
@@ -76,7 +77,7 @@ export default {
           prop: "industryName",
           label: "行业名称",
           type: "select",
-          options: enumeArr["hyArr"],
+          options: enumeArr["industryNameArr"],
         },
         {
           prop: "cityName",
@@ -138,7 +139,7 @@ export default {
         },
 
         {
-          prop: "moneyList",
+          prop: "moneyAbility",
           label: "钞能力",
           type: "input",
         },
@@ -160,6 +161,7 @@ export default {
       rules: {
         userName: [{required: true, message: "请输入用户名称", trigger: "blur"},],
         age: [{required: true, message: "请输入用户名称", trigger: "blur"},],
+        restTime: [{required: true, message: "请输入摸鱼时长h", trigger: 'blur'}],
         industryName: [{required: true, message: "请选择所属行业", trigger: "change"},],
         monthSalary: [{required: true, message: "请输入月薪", trigger: "blur"}],
         yearSalary: [{required: true, message: "请输入工龄", trigger: 'blur'}],
@@ -201,15 +203,12 @@ export default {
         this.form = row;
       }
     },
-    query() {
+    createAndUpdate() {
       let params = {
         ...this.form,
         sshymc: enumeArr["getTextByCode"](enumeArr["hyArr"], this.form.sshy),
       };
       let formData = this.$refs.form.formModel;
-      console.log("体检参数来了")
-      console.log(params)
-      console.log(formData)
       if (formData.id) {
         update(formData).then(() => {
           this.$message.success("修改成功！");
@@ -224,11 +223,35 @@ export default {
         });
       }
     },
+
+    // 分析
+    analysis() {
+      let params = {
+        ...this.form,
+        sshymc: enumeArr["getTextByCode"](enumeArr["hyArr"], this.form.sshy),
+      };
+      let formData = this.$refs.form.formModel;
+      let submit = false
+      this.$refs.form.$refs.baseForm.validate((v) => {
+        submit = v;
+      });
+      //分析
+      console.log("是否提交" + submit)
+      if (submit) {
+        analysis(formData).then(response => {
+          // this.$message.success("修改成功！");
+          // this.dialogVisible = false;
+          // this.$emit("updateCallback", params);
+          console.log(response)
+        });
+      }
+    },
+
     submit() {
       let self = this;
       this.$refs.form.$refs.baseForm.validate((v) => {
         if (v) {
-          self.query();
+          self.createAndUpdate();
         }
       });
     },

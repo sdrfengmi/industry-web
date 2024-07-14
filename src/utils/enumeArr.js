@@ -1,4 +1,4 @@
-import {queryCityList, queryDictionaryList} from "@/api/api/userApi";
+import {queryCityList,queryIndustryList, queryDictionaryList} from "@/api/api/userApi";
 import {AxiosResponse} from "axios";
 
 // 行业
@@ -40,8 +40,10 @@ const educationArr = [
     {label: "家里蹲", value: 1}, {label: "大专", value: 2}, {label: "本科", value: 3}, {label: "211/985本科", value: 4},
     {label: "研究生", value: 5}, {label: "博士", value: 6}, {label: "博士后", value: 7}
 ]
-
+// 城市字典
 const cityNameArr = await queryCityList({})
+// 行业字典
+const industryNameArr = await queryIndustryList({})
 
 function getTextByCode(data, code) {
     for (let i = 0; i < data.length; i++) {
@@ -74,5 +76,6 @@ export default {
     stressLevelArr,
     workSteadyArr,
     workRequireArr,
-    cityNameArr
+    cityNameArr,
+    industryNameArr
 }

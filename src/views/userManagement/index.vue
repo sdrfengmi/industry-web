@@ -73,7 +73,7 @@ import enumeArr from "@/utils/enumeArr.js";
 
 export default {
   // 注册子组件 ,先导入后注册
-  components: {SearchForm, BaseTable,Edit},
+  components: {SearchForm, BaseTable, Edit},
   // mixins: [tablePageMixin],
   name: "userManagement",
   data() {
@@ -92,7 +92,8 @@ export default {
         {
           label: "城市",
           prop: "cityName",
-          type: "input",
+          type: "select",
+          options: enumeArr["cityNameArr"],
         },
         {
           label: "性别",
@@ -229,7 +230,7 @@ export default {
           dict: enumeArr["workDayArr"]
         },
         {
-          prop: "moneyList",
+          prop: "moneyAbility",
           label: "钞能力",
           width: 50,
           ellipsis: true,
@@ -298,7 +299,7 @@ export default {
       console.log(form);
     },
     handleSizeAndCurrentChange(val) {
-      this.searchFormObj = { ...val };
+      this.searchFormObj = {...val};
       console.log("翻页:" + val);
       this.queryPage()
     },
