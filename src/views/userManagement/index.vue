@@ -57,7 +57,7 @@
     </div>
     <!-- 父类调用子组件   ref 是给这个组件起一个名字,ref="edit"  下面this.$refs.edit才能引用这个组件,  后面.showDialog能直接调用这个组件的方法-->
     <!-- 子组件调用父类   @createCallback="createCallback": 这是一个事件监听器(event listener)，它监听子组件Edit触发的createCallback事件。当子组件触发这个事件时，父组件中定义的createCallback方法会被调用。-->
-    <Edit ref="edit" @createCallback="createCallback"/>
+    <Edit ref="edit" @createAndUpdateCallback="createAndUpdateCallback"/>
   </div>
 </template>
 <script>
@@ -303,8 +303,8 @@ export default {
       console.log("翻页:" + val);
       this.queryPage()
     },
-    createCallback() {
-      console.log("12");
+    createAndUpdateCallback() {
+      this.queryPage();
     },
   },
 };

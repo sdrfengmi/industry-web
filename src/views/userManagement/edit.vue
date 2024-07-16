@@ -213,13 +213,13 @@ export default {
         update(formData).then(() => {
           this.$message.success("修改成功！");
           this.dialogVisible = false;
-          this.$emit("updateCallback", params);
+          this.$emit("createAndUpdateCallback", params);
         });
       } else {
         create(formData).then(() => {
           this.$message.success("创建成功！");
           this.dialogVisible = false;
-          this.$emit("createCallback", params);
+          this.$emit("createAndUpdateCallback", params);
         });
       }
     },
