@@ -11,7 +11,7 @@
     >
       <BaseForm
           v-if="dialogVisible"
-          labelWidth="85px"
+          labelWidth="90px"
           :span="12"
           ref="form"
           :formModelF="form"
@@ -60,7 +60,7 @@ export default {
         {
           prop: "workAge",
           label: "工龄",
-          type: "input",
+          type: "integer",
         },
         {
           prop: "sex",
@@ -118,11 +118,11 @@ export default {
         {
           prop: "commuterTime",
           label: "通勤时长m",
-          type: "input",
+          type: "integer",
         },
         {
           prop: "workDay",
-          label: "每周工天数",
+          label: "周工作天数d",
           type: "select",
           options: enumeArr["workDayArr"],
         },
@@ -134,24 +134,25 @@ export default {
         },
         {
           prop: "restTime",
-          label: "摸鱼时长h",
-          type: "input",
+          label: "摸鱼时长m",
+          type: "select",
+          options: enumeArr["restTimeArr"],
         },
 
         {
           prop: "moneyAbility",
           label: "钞能力",
-          type: "input",
+          type: "number",
         },
         {
           prop: "monthSalary",
-          label: "月薪",
-          type: "input",
+          label: "月薪k",
+          type: "number",
         },
         {
           prop: "yearSalary",
-          label: "年薪",
-          type: "input",
+          label: "年薪w",
+          type: "number",
         },
       ],
       form: {

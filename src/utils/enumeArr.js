@@ -17,6 +17,10 @@ const workTimeArr = [
     {label: "6", value: 6}, {label: "7", value: 7}, {label: "8", value: 8}, {label: "9", value: 9},
     {label: "10", value: 10}, {label: "11", value: 11}, {label: "12", value: 12}
 ]
+const restTimeArr = [
+    {label: "30分钟---0.5小时", value: 0.5}, {label: "60分钟---1小时", value: 1}, {label: "90分钟---1.5小时", value: 1.5}, {label: "120分钟---2小时", value: 2},
+    {label: "150分钟---2.5小时", value: 2.5}, {label: "180分钟---3小时", value: 3}, {label: "210分钟---3.5小时", value: 3.5}, {label: "240分钟---4小时", value: 4}
+]
 //异性比例
 const oppositeSexRatioArr = [
     {label: "很少", value: 1}, {label: "五五开", value: 2}, {label: "很多", value: 3}, {label: "我有对象", value: 4}
@@ -71,6 +75,7 @@ export default {
     sexArr,
     workDayArr,
     workTimeArr,
+    restTimeArr,
     educationArr,
     oppositeSexRatioArr,
     stressLevelArr,

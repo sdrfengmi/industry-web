@@ -20,6 +20,7 @@
               v-if="item.type == 'input'"
               :placeholder="`请输入${item.label}`"
               size="small"
+              :style="{ width: '100%' }"
               :type="item.inputType || 'text'"
               autocomplete="on"
               v-model="formModel[item.prop]"
@@ -38,6 +39,7 @@
               :disabled="item.disabled"
               :placeholder="`请输入${item.label}`"
               size="small"
+              :style="{ width: '100%' }"
               autocomplete="off"
               v-model="formModel[item.prop]"
             >
@@ -118,7 +120,6 @@
               filterable
               clearable
               size="small"
-              style="width: 100%"
               v-model="formModel[item.prop]"
               :placeholder="`请选择${item.label}`"
             >
@@ -268,7 +269,7 @@ export default {
   props: {
     span: {
       type: Number,
-      default: 24,
+      default: 20,
     },
     formModelF: {
       type: Object,
@@ -284,7 +285,7 @@ export default {
     },
     labelWidth: {
       type: String,
-      default: "80px",
+      default: "100px",
     },
     fileds: {
       type: Array,
