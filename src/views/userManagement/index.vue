@@ -2,16 +2,20 @@
   <div>
     <div class="top">
       <div class="card-wrapper">
-        <div class="card-label">当日最大</div>
-        <div class="card-value">20000</div>
+        <div class="card-label">当日最大月薪</div>
+        <div class="card-value">{{ userCurrentTop.userMax?.monthSalary }}k</div>
       </div>
       <div class="card-wrapper">
-        <div class="card-label">当日平均</div>
-        <div class="card-value">15000</div>
+        <div class="card-label">当日平均月薪</div>
+        <div class="card-value">{{ userCurrentTop.userAvg?.monthSalary }}k</div>
       </div>
       <div class="card-wrapper">
-        <div class="card-label">当日最小</div>
-        <div class="card-value">10000</div>
+        <div class="card-label">当日平均月薪</div>
+        <div class="card-value">{{ userCurrentTop.userMin?.monthSalary }}k</div>
+      </div>
+      <div class="card-wrapper">
+        <div class="card-label">top5</div>
+        <div class="card-value">{{ userCurrentTop.userMin?.monthSalary }}</div>
       </div>
     </div>
     <div class="container-wrapper mt10">
@@ -41,7 +45,7 @@
           class="table-fixed-wrapper"
           :height="600"
           :data="tableData"
-          :pageOption="searchFormObj"
+          :pageOption="pageOption"
           @submit="search"
           @handleSizeChange="handleSizeAndCurrentChange"
           @handleCurrentChange="handleSizeAndCurrentChange"
@@ -67,7 +71,7 @@ import BaseTable from '@/components/base-table/baseTable.vue'
 // import tablePageMixin from "@/components/base-table/tablePageMixin";
 // 导入子组件
 import Edit from "./edit.vue";
-import {queryPage} from "@/api/api/userApi";
+import {queryCurrentUserTop, queryPage} from "@/api/api/userApi";
 import axios from 'axios';
 import enumeArr from "@/utils/enumeArr.js";
 
@@ -105,7 +109,7 @@ export default {
           ],
         },
       ],
-      searchFormObj: {
+      pageOption: {
         total: 0,
         pageNum: 1,
         pageSize: 10,
@@ -247,6 +251,18 @@ export default {
           width: 60,
           ellipsis: true,
         },
+        {
+          prop: "score",
+          label: "行业得分",
+          width: 60,
+          ellipsis: true,
+        },
+        {
+          prop: "title",
+          label: "称号",
+          width: 80,
+          ellipsis: true,
+        },
       ],
       tableData: [
         // {
@@ -257,6 +273,14 @@ export default {
         //   sex: "男",
         // },
       ],
+      userCurrentTop: {
+        userMax: {},
+        userMin: {},
+        userAvg: {},
+        moneyAbilityTop: {},
+      },
+
+
       // pageOption: {
       //   total: 0,
       //   pageNum: 1,
@@ -272,15 +296,23 @@ export default {
   },
   methods: {
     queryPage() {
+      //当天分析
+      queryCurrentUserTop({}).then(response => {
+        this.userCurrentTop.userMax = response.data.userMax
+        this.userCurrentTop.userMin = response.data.userMin
+        this.userCurrentTop.userAvg = response.data.userAvg
+        this.userCurrentTop.moneyAbilityTop = response.data.moneyAbilityTop
+      });
+
       // params.pageSize = this.pageOption.pageSize
       // params.pageNum = this.pageOption.pageNum
-      queryPage(this.searchFormObj).then(response => {
+      queryPage(this.pageOption).then(response => {
         // this.tableData=response.data.records;
         // Array.prototype.push.apply(this.tableData, response.data.records);
         this.tableData = response.data.records
-        this.searchFormObj.total = response.data.total
-        this.searchFormObj.pageNum = response.data.current
-        this.searchFormObj.pageSize = response.data.size
+        this.pageOption.total = response.data.total
+        this.pageOption.pageNum = response.data.current
+        this.pageOption.pageSize = response.data.size
         console.log("结果")
         console.log(response.data.records)
         console.log(this.tableData)
@@ -294,12 +326,12 @@ export default {
       this.$refs.edit.showDialog(row);
     },
     search(form) {
-      this.searchFormObj = {...form};
+      this.pageOption = {...form};
       this.queryPage()
       console.log(form);
     },
     handleSizeAndCurrentChange(val) {
-      this.searchFormObj = {...val};
+      this.pageOption = {...val};
       console.log("翻页:" + val);
       this.queryPage()
     },

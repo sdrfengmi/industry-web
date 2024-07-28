@@ -1,8 +1,16 @@
 import request from "@/api/request";
 
+// data,和 params 区别
 export function queryPage(data) {
     return request({
         url: '/industry-info/user/queryPage',
+        method: 'post',
+        data
+    })
+}
+export function queryCurrentUserTop(data) {
+    return request({
+        url: 'industry-info/user/queryCurrentUserTop',
         method: 'post',
         data
     })

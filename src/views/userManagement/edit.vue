@@ -18,6 +18,23 @@
           :rules="rules"
           :fileds="fileds"
       />
+      <div class="score-container">
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <div class="score-display">
+              <div class="score-info">
+                <div class="score-value">得分:{{ form.score }}</div>
+              </div>
+              <div class="score-bar-container">
+                <!--  <div class="score-bar" :style="{ width: (form.score / 10 * 100) + '%', backgroundColor: barColor }"></div>-->
+                <div class="score-bar" :style="{ width: (form.score / 10 * 100) + '%' }"></div>
+              </div>
+              <div class="score-value">称号:{{ form.title }}</div>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+
       <span slot="footer" class="dialog-footer">
         <el-button size="small" type="warning" @click="analysis">分 析</el-button>
         <el-button size="small" @click="dialogVisible = false">取 消</el-button>
@@ -138,7 +155,6 @@ export default {
           type: "select",
           options: enumeArr["restTimeArr"],
         },
-
         {
           prop: "moneyAbility",
           label: "钞能力",
@@ -154,8 +170,26 @@ export default {
           label: "年薪w",
           type: "number",
         },
+        // {
+        //   prop: "score",
+        //   label: "行业得分",
+        //   width: 60,
+        //   type: "number",
+        //   disabled: true,
+        // },
+        // {
+        //   prop: "title",
+        //   label: "称号",
+        //   width: 80,
+        //   ellipsis: true,
+        //   type: "input",
+        //   disabled: true,
+        // },
       ],
       form: {
+        id: undefined,
+        score: 0,
+        title: null,
         // id: this.listItem["id"],TODO 为什么这里获取不到属性报错
         sex: 1,
       },
@@ -169,7 +203,14 @@ export default {
       },
     };
   },
-  computed: {},
+  computed: {
+    barColor() {
+      // 根据得分返回渐变色，颜色越来越红
+      const redScale = Math.min(this.form.score / 10, 1); // 红色比例
+      const redValue = Math.round(redScale * 255); // 红色值
+      return `rgb(${redValue}, 128, 128)`; // 使用紫色作为示例，根据需要调整
+    }
+  },
   components: {
     BaseForm,
   },
@@ -183,26 +224,25 @@ export default {
   methods: {
     reset() {
       this.form = {
-        yhmc: undefined,
-        sshy: undefined,
-        yx: undefined,
-        gl: undefined,
+        score: null,
+        title: null,
+        id: undefined,
+        sex: 1,
       };
     },
     formatForm(listItem) {
       this.form = {
-        yhmc: undefined,
-        sshy: undefined,
-        yx: undefined,
-        gl: undefined,
+        ...this.form, // 保留原有的默认值
+        // 其他属性...
         ...listItem,
+        score: Math.max(0, Math.floor(listItem.score || 0)),
       };
     },
     showDialog(row) {
-      this.dialogVisible = true;
       if (row) {
-        this.form = row;
+        this.formatForm(row)
       }
+      this.dialogVisible = true;
     },
     createAndUpdate() {
       let params = {
@@ -240,10 +280,10 @@ export default {
       console.log("是否提交" + submit)
       if (submit) {
         analysis(formData).then(response => {
-          // this.$message.success("修改成功！");
-          // this.dialogVisible = false;
-          // this.$emit("updateCallback", params);
-          console.log(response)
+          this.form.score = response.data.score;
+          this.form.title = response.data.title;
+          console.log("得分" + this.form.score )
+          console.log("标题" + this.form.title )
         });
       }
     },
@@ -277,5 +317,53 @@ export default {
   padding: 15px 20px;
   max-height: calc(100vh - 200px);
   overflow: auto;
+}
+
+.score-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; //空间分配：使用 justify-content: space-between; 确保得分标题和得分值在柱状图两侧适当分布。
+  width: 400px;
+}
+
+.score-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.score-title {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.score-bar-container {
+  width: 100%;
+  height: 20px;
+  //background-color: #eee;
+  background-color: #e0e0e0; /* 更亮的背景色 */
+  border-radius: 10px;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.score-bar {
+  height: 100%;
+  //background: linear-gradient(to right, #ffdddd 0%, #ff5c5c 100%); /* 更亮的渐变色 */
+  background: linear-gradient(to right, #fff 0%, #f00 100%);
+  transition: width 0.5s ease;
+}
+
+.score-value {
+  font-size: 16px;
+  color: #333;
+  width: 50px;
+}
+
+.score-info {
+  flex-grow: 1; /* 确保得分和标题占据大部分空间 */
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 水平居中对齐 */
 }
 </style>
