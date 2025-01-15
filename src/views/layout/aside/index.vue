@@ -60,13 +60,17 @@
 import UserManagement from '../../userManagement';
 import UserProfile from '../../userProfile';
 import SystemSettings from '../../userProfile';
+import EtfManage from '../../etfManage';
+import StockManage from '../../stockManage';
 // import SystemSettings from '/src/views/userProfile';
 
 export default {
   components: {
     UserManagement,
     UserProfile,
-    SystemSettings
+    SystemSettings,
+    EtfManage,
+    StockManage
   },
   name: "asideCom",
   data() {
@@ -89,6 +93,15 @@ export default {
           subMenu: [
             {index: 'systemSettings', title: '系统设置', component: 'SystemSettings'}
           ]
+        },
+        {
+          index: '3',
+          title: '理财管理',
+          icon: 'el-icon-setting',
+          subMenu: [
+            {index: 'etfManage', title: 'etf管理', component: 'EtfManage'},
+            {index: 'stockManage', title: '股票管理', component: 'StockManage'}
+          ]
         }
         // 可以根据需要添加更多的菜单项
       ],
@@ -108,6 +121,12 @@ export default {
           break;
         case 'systemSettings':
           this.activeView = 'SystemSettings';
+          break;
+        case 'etfManage':
+          this.activeView = 'EtfManage';
+          break;
+        case 'stockManage':
+          this.activeView = 'StockManage';
           break;
         default:
           this.activeView = 'UserManagement';
